@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="loginUserNameLabel">用户名</string>
+	<string name="loginPasswordLabel">密码</string>
+
+	<string name="loginSubmit">在线登录</string>
+	<string name="loginSubmitLocal">本地登录</string>
+	<string name="loginRegister">注册</string>
+	<string name="loginmark">说明：只有在线登录成功后的用户才能进行本地登录</string>
+	
+	<string name="loginTitle">登录</string>
+	<string name="loginRememberMe">记住我的用户名和密码</string>
+	<string name="MENU_EXIT">退出</string>
+	<string name="MENU_ABOUT">关于</string>
+	<string name="aboutInfo">
+		制作人:杜成栋 \n邮    箱: 027728
+	</string>
+	<string name="ok_label">确认</string>
+	
+	<string name="loginmark1">软件名称：永钢扫描发货管理软件V1.0</string>
+	<string name="loginmark2">版本号：V1.0</string>
+	<string name="loginmark3">制作单位：江苏恒创软件有限公司</string>
+	<string name="loginmark4">班组</string>
+	<string name="loginmark5">线别</string>
+</resources>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">永钢入库管理软件</string>
+    <string name="app_versionName">版权所属：江苏永钢集团有限公司</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_login">永钢扫描发货管理软件</string>
+    <string name="title_activity_main">永钢扫描发货管理软件</string>
+    <string name="title_activity_smfhlist">扫描入库</string>
+    <string name="title_activity_qrthlist">确认入库</string>
+    <string name="title_activity_smthlist">扫描退货</string>
+    <string name="title_activity_fhllist">入库量查询</string>
+    <string name="title_activity_fhmxlist">入库明细查询</string>
+    <string name="title_activity_fhmxhzlist">入库明细汇总查询</string>
+    <string name="title_activity_fhmxhz1list">入库明细汇总查询</string>
+</resources>

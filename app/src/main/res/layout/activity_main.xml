@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/smccrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/back_button"
+            android:text="扫描产出入库"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/smccrkqr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描产出入库确认"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/smccrkqx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描产出入库取消"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/smck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描出库"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/smckqr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描出库确认"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/smckqx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描出库取消"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/smrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描入库"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/smrkqr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描入库确认"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/smdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描倒剁"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/smddqr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描倒剁确认"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/kongkwcx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="线材空库位查询"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/xcccsmrk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="线材产出扫描入库"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/xcccsmrkqr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="线材产出扫描入库确认"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/kwxxcx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="扫描库位信息查询"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/kccx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_button"
+            android:text="库存查询"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/exit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginEnd="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/back_exit"
+            android:text="退出"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+</ScrollView>

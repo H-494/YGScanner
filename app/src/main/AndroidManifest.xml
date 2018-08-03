@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="invonate.cn.ygscanner">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".SmccrkActivity" />
+        <activity android:name=".SmccrkqrActivity" />
+        <activity android:name=".SmccrkqxActivity" />
+        <activity android:name=".SmckActivity" />
+        <activity android:name=".SmckqrActivity" />
+        <activity android:name=".SmckqxActivity" />
+        <activity android:name=".SmrkActivity" />
+        <activity android:name=".SmrkqrActivity" />
+        <activity android:name=".SmddActivity" />
+        <activity android:name=".SmddqrActivity" />
+        <activity android:name=".KccxActivity" />
+
+        <!-- 安装apk 7.0所需 -->
+        <provider
+            android:name=".Util.MyProvide"
+            android:authorities="invonate.cn.ygscanner.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity android:name=".Permission.PermissionsActivity" />
+        <activity android:name=".SmkkwcxActivity" />
+        <activity android:name=".SmxcccActivity" />
+        <activity android:name=".SmxcccqrActivity" />
+        <activity android:name=".SmkwcxActivity"/>
+    </application>
+
+</manifest>
