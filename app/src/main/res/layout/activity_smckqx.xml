@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20sp"
             android:background="@drawable/back_button"
-            android:text="取消入库"
+            android:text="取消出库"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
 

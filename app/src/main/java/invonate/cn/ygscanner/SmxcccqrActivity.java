@@ -339,6 +339,7 @@ public class SmxcccqrActivity extends AppCompatActivity {
                     message.setData(bundle);
                     handler.sendMessage(message);
                 } else {
+//                    info = getSmxcccrk();
                     db.execSQL("Delete FROM YG_XCXXM");
                     messageStr = result.substring(11, 21);
                     Message message = new Message();

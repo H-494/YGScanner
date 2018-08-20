@@ -69,30 +69,31 @@ public class SmckqxActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         DatabaseHelper database = new DatabaseHelper(this);
         db = database.getReadableDatabase();
-        code.addTextChangedListener(new TextWatcher() {
-            boolean isExecute = false;//是否扫描
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                isExecute = i == 0 && i2 > 1;// true 为 扫描  false为输入
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (isExecute && code.getText().length() > 25) {
-                    new Thread(new querykcddinfoHandler()).start();
-//                } else {
-//                    if (code.getText().toString().endsWith("\n")) {
-//                        new Thread(new querykcddinfoHandler()).start();
-//                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+//        code.addTextChangedListener(new TextWatcher() {
+//            boolean isExecute = false;//是否扫描
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                isExecute = i == 0 && i2 > 1;// true 为 扫描  false为输入
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if (isExecute && code.getText().length() > 25) {
+//                    new Thread(new querykcddinfoHandler()).start();
+////                } else {
+////                    if (code.getText().toString().endsWith("\n")) {
+////                        new Thread(new querykcddinfoHandler()).start();
+////                    }
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+        code.addTextChangedListener(watcher);
 
         SharedPreferences share = getApplicationContext().getSharedPreferences("share", Context.MODE_PRIVATE);
         bzmc = share.getString("bzmc", "NORE");
@@ -109,6 +110,49 @@ public class SmckqxActivity extends AppCompatActivity {
             bz = "C";
         }
     }
+
+
+    private TextWatcher watcher = new TextWatcher() {
+        int location = 0;
+        boolean isExcute = false;
+
+        @SuppressLint("NewApi")
+        @Override
+        public void afterTextChanged(Editable arg0) {
+
+            if (arg0.length() > 0) {
+                if (!isExcute) {
+                    return;
+                }
+                if (location > 0) {
+                    arg0.delete(0, location);
+                }
+                if (code.getText().length() > 25) {
+                    new Thread(new querykcddinfoHandler()).start();
+                }
+            }
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence arg0, int start, int count, int after) {
+            // TODO Auto-generated method stub
+            location = start;
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // TODO Auto-generated method stub
+            // 扫描时，start从0开始，count>1
+            // 手动输入时，start递增,count=1
+            // 手动删除时，start递减，count=0
+            isExcute = false;
+            if (count > 1) {
+                isExcute = true;
+            }
+
+        }
+    };
 
     @OnClick({R.id.cancel, R.id.finish})
     public void onViewClicked(View view) {
@@ -309,7 +353,7 @@ public class SmckqxActivity extends AppCompatActivity {
             Date date2 = new Date();
             SimpleDateFormat format2 = new SimpleDateFormat("HHmmss");
             String time3 = format2.format(date2);
-            String data = String.format("%-10s", "SHHL39C") + "A"
+            String data = String.format("%-10s", "SHHL39C") + "I"
                     + String.format("%-10s", name) + String.format("%-1s", bz)
                     + String.format("%-8s", time2)
                     + String.format("%-6s", time3)
@@ -405,7 +449,7 @@ public class SmckqxActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == 241) {
-            code.setText("");
+//            code.setText("");
             code.requestFocus();
             return false;
         } else if (keyCode == KeyEvent.KEYCODE_ENTER) {

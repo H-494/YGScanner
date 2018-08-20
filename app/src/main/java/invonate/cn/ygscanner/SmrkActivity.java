@@ -224,34 +224,35 @@ public class SmrkActivity extends AppCompatActivity {
         zlmc = share.getString("zlmc", "NORE");
         name = share.getString("name", "NORE");
 
-        code.addTextChangedListener(new TextWatcher() {
-            boolean isExecute = false;//是否扫描
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                isExecute = i == 0 && i2 > 1;
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (sure) {
-                    if (isExecute && code.getText().toString().length() > 25) {
-                        new Thread(new querykcddinfoHandler()).start();
-//                    } else {
-//                        if (code.getText().toString().endsWith("\n")) {
-//                            new Thread(new querykcddinfoHandler()).start();
-//                        }
-                    }
-                } else {
-                    Toast.makeText(SmrkActivity.this, "请先确认库区", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+//        code.addTextChangedListener(new TextWatcher() {
+//            boolean isExecute = false;//是否扫描
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                isExecute = i == 0 && i2 > 1;
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if (sure) {
+//                    if (isExecute && code.getText().toString().length() > 25) {
+//                        new Thread(new querykcddinfoHandler()).start();
+////                    } else {
+////                        if (code.getText().toString().endsWith("\n")) {
+////                            new Thread(new querykcddinfoHandler()).start();
+////                        }
+//                    }
+//                } else {
+//                    Toast.makeText(SmrkActivity.this, "请先确认库区", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
+        code.addTextChangedListener(watcher);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             List<String> list = bundle.getStringArrayList("list");
@@ -298,6 +299,53 @@ public class SmrkActivity extends AppCompatActivity {
             }
         }
     }
+
+    private TextWatcher watcher = new TextWatcher() {
+        int location = 0;
+        boolean isExcute = false;
+
+        @SuppressLint("NewApi")
+        @Override
+        public void afterTextChanged(Editable arg0) {
+
+            if (arg0.length() > 0) {
+                if (!isExcute) {
+                    return;
+                }
+                if (location > 0) {
+                    arg0.delete(0, location);
+                }
+                if (sure) {
+                    if (code.getText().length() > 25) {
+                        new Thread(new querykcddinfoHandler()).start();
+                    }
+                } else {
+                    Toast.makeText(SmrkActivity.this, "请先确认库区", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence arg0, int start, int arg2, int arg3) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // TODO Auto-generated method stub
+            // 扫描时，start从0开始，count>1
+            // 手动输入时，start递增,count=1
+            // 手动删除时，start递减，count=0
+            location = start;
+
+            isExcute = false;
+            if (count > 1) {
+                isExcute = true;
+            }
+
+        }
+    };
 
     public static String getJson(String fileName, Context context) {
         //将json数据变成字符串
@@ -558,7 +606,7 @@ public class SmrkActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == 241) {
-            code.setText("");
+//            code.setText("");
             code.requestFocus();
             return false;
         } else if (keyCode == KeyEvent.KEYCODE_ENTER) {

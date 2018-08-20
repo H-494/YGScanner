@@ -266,6 +266,7 @@ public class SmddqrActivity extends AppCompatActivity {
                     + String.format("%-10s", name) + String.format("%-1s", bz)
                     + String.format("%-1s", bc)
                     + String.format("%-8s", time2)
+                    + String.format("%-10s", list.get(0))
                     + String.format("%-20s", list.get(1))
                     + String.format("%-20s", list.get(2))
                     + String.format("%-10s", total)
@@ -306,6 +307,7 @@ public class SmddqrActivity extends AppCompatActivity {
                     message.setData(bundle);
                     handler.sendMessage(message);
                 } else {
+//                    info = getdd();
                     db.execSQL("Delete FROM YG_DDXXM");
                     messageStr = result.substring(11, 21);
                     Message message = new Message();

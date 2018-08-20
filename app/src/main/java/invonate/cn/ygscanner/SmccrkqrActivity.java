@@ -312,6 +312,7 @@ public class SmccrkqrActivity extends AppCompatActivity {
                     message.setData(bundle);
                     handler.sendMessage(message);
                 } else {
+//                    info = getSmccrk();
                     db.execSQL("Delete FROM YG_FHXXM");
                     messageStr = result.substring(11, 21);
                     Message message = new Message();
@@ -364,7 +365,6 @@ public class SmccrkqrActivity extends AppCompatActivity {
             list.add(cursor.getString(1));
             list.add(cursor.getString(2));
             list.add(cursor.getString(3));
-            Log.i("hhh",cursor.getString(3));
         }
         return list;
     }

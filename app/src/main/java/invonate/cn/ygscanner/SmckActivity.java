@@ -164,7 +164,8 @@ public class SmckActivity extends AppCompatActivity {
                     }
                 });
                 if (old_iku != 0) {
-                    spOutku.setSelection(old_iku);
+                    spInku.setSelection(old_iku);
+
                 }
             }
 
@@ -180,34 +181,36 @@ public class SmckActivity extends AppCompatActivity {
         zlmc = share.getString("zlmc", "NORE");
         name = share.getString("name", "NORE");
 
-        code.addTextChangedListener(new TextWatcher() {
-            boolean isExecute = false;//是否扫描
+//        code.addTextChangedListener(new TextWatcher() {
+//            boolean isExecute = false;//是否扫描
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                isExecute = i == 0 && i2 > 1;
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if (sure) {
+//                    if (isExecute && code.getText().length() > 25) {
+//                        new Thread(new querykcddinfoHandler()).start();
+////                    } else {
+////                        if (code.getText().toString().endsWith("\n")) {
+////                            new Thread(new querykcddinfoHandler()).start();
+////                        }
+//                    }
+//                } else {
+//                    Toast.makeText(SmckActivity.this, "请先确认移出和移入库", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//            }
+//        });
 
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                isExecute = i == 0 && i2 > 1;
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (sure) {
-                    if (isExecute && code.getText().length() > 25) {
-                        new Thread(new querykcddinfoHandler()).start();
-//                    } else {
-//                        if (code.getText().toString().endsWith("\n")) {
-//                            new Thread(new querykcddinfoHandler()).start();
-//                        }
-                    }
-                } else {
-                    Toast.makeText(SmckActivity.this, "请先确认移出和移入库", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        code.addTextChangedListener(watcher);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -218,6 +221,7 @@ public class SmckActivity extends AppCompatActivity {
                 String list_oku = list.get(1);
                 String list_ikubie = list.get(2);
                 String list_okubie = list.get(3);
+
                 List<Ku.DataBean.KubieBean.KuBean> iku = null;
                 List<Ku.DataBean.KubieBean.KuBean> oku = null;
                 for (int i = 0; i < data.size(); i++) {
@@ -239,6 +243,8 @@ public class SmckActivity extends AppCompatActivity {
                     for (int n = 0; n < iku.size(); n++) {
                         if (list_iku.equals(iku.get(n).getName())) {
                             old_iku = n;
+                            Log.i("hhh",list_iku);
+                            Log.i("hhh",n+"");
                             spInku.setSelection(n);
                             break;
                         }
@@ -257,6 +263,53 @@ public class SmckActivity extends AppCompatActivity {
         }
 
     }
+
+    private TextWatcher watcher = new TextWatcher() {
+        int location = 0;
+        boolean isExcute = false;
+
+        @SuppressLint("NewApi")
+        @Override
+        public void afterTextChanged(Editable arg0) {
+
+            if (arg0.length() > 0) {
+                if (!isExcute) {
+                    return;
+                }
+                if (location > 0) {
+                    arg0.delete(0, location);
+                }
+                if (sure) {
+                    if (code.getText().length() > 25) {
+                        new Thread(new querykcddinfoHandler()).start();
+                    }
+                } else {
+                    Toast.makeText(SmckActivity.this, "请先确认库区", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence arg0, int start, int count, int after) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // TODO Auto-generated method stub
+            // 扫描时，start从0开始，count>1
+            // 手动输入时，start递增,count=1
+            // 手动删除时，start递减，count=0
+            location = start;
+
+            isExcute = false;
+            if (count > 1) {
+                isExcute = true;
+            }
+
+        }
+    };
 
     @OnClick({R.id.sure, R.id.finish})
     public void onViewClicked(View view) {
@@ -379,10 +432,10 @@ public class SmckActivity extends AppCompatActivity {
 
             String data = " ";
             if (!(scannerhwtmtext.contains("#"))) {
-                data = String.format("%-10s", "SHHL40") + "A"
+                data = String.format("%-10s", "SHHL40") + "C"
                         + String.format("%-20s", e) + "*";
             } else {
-                data = String.format("%-10s", "SHHL40") + "A"
+                data = String.format("%-10s", "SHHL40") + "C"
                         + String.format("%-51s", e) + "*";
             }
             // 设置需调用WebService接口需要传入的两个参数mobileCode、userId
@@ -547,7 +600,6 @@ public class SmckActivity extends AppCompatActivity {
                     made.setText(goods.getMaterial());
                     weight.setText(String.format("%s（%s）", goods.getRealWeight(), goods.getWeight()));
                     length.setText(goods.getLength());
-
                     sumRealWeight.setText(msg.getData().getString("realwtg", ""));
                     sumWeight.setText(msg.getData().getString("theowgt", ""));
                     sum.setText(String.format("%d", msg.getData().getInt("sum")));
@@ -563,7 +615,7 @@ public class SmckActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == 241) {
-            code.setText("");
+//            code.setText("");
             code.requestFocus();
             return false;
         } else if (keyCode == KeyEvent.KEYCODE_ENTER) {

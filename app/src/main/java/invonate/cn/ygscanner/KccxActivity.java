@@ -97,9 +97,7 @@ public class KccxActivity extends AppCompatActivity {
                         KccxAdapter adapter = new KccxAdapter(list, KccxActivity.this);
                         listGoods.setAdapter(adapter);
                     }
-
                     break;
-
             }
         }
     };

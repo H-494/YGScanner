@@ -1,6 +1,7 @@
 package invonate.cn.ygscanner;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,13 +37,16 @@ public class SmkwcxActivity extends AppCompatActivity {
     @BindView(R.id.list)
     ListView list;
 
-    ProgressDialog dialog;
+    private ProgressDialog dialog;
+    Boolean changed;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            if (dialog.isShowing())
+                dialog.dismiss();
             switch (msg.what) {
                 case 0:
                     Toast.makeText(SmkwcxActivity.this, "未查到数据", Toast.LENGTH_SHORT).show();
@@ -51,14 +56,22 @@ public class SmkwcxActivity extends AppCompatActivity {
                 case 1:
                     String data = msg.getData().getString("data");
                     Kwcc kwcc = JSON.parseObject(data, Kwcc.class);
-                    list.setAdapter(new KwccAdapter(kwcc.getData(),SmkwcxActivity.this));
+                    for (int i = 0; i < kwcc.getData().size(); i++) {
+                        if (kwcc.getData().get(i).getKey().equals("产品形态代码")) {
+                            kwcc.getData().get(i).setKey("产品材料状态");
+                        }
+                    }
+                    list.setAdapter(new KwccAdapter(kwcc.getData(), SmkwcxActivity.this));
                     if (dialog.isShowing())
                         dialog.dismiss();
                     break;
-
+                case -1:
+                    dialog.show();
+                    break;
             }
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,29 +81,49 @@ public class SmkwcxActivity extends AppCompatActivity {
         setTitle("扫描库位信息查询");
         dialog = new ProgressDialog(this);
         dialog.setMessage("查询中");
-        code.addTextChangedListener(new TextWatcher() {
-
-            boolean isExecute = false;//是否扫描
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                isExecute = i == 0 && i2 > 1;// true 为 扫描  false为输入
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (isExecute && code.getText().length() > 10) {
-                    new Thread(new Querykwcx(code.getText().toString().trim())).start();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        code.addTextChangedListener(watcher);
     }
 
+    private TextWatcher watcher = new TextWatcher() {
+        int location = 0;
+        boolean isExcute = false;
+
+//        @SuppressLint("NewApi")
+        @Override
+        public void afterTextChanged(Editable arg0) {
+
+            if (arg0.length() > 0) {
+                if (!isExcute) {
+                    return;
+                }
+                if (location > 0) {
+                    arg0.delete(0, location);
+                    Log.i("hhh","22222222222");
+                }
+                if (code.getText().length() > 25) new Thread(new Querykwcx(code.getText().toString().trim())).start();
+            }
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence arg0, int start, int arg2, int arg3) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // TODO Auto-generated method stub
+            // 扫描时，start从0开始，count>1
+            // 手动输入时，start递增,count=1
+            // 手动删除时，start递减，count=0
+            location = start;
+            isExcute = false;
+            if (count > 1) {
+                isExcute = true;
+            }
+
+        }
+    };
 
     class Querykwcx implements Runnable {
         private String invId;
@@ -101,6 +134,7 @@ public class SmkwcxActivity extends AppCompatActivity {
 
         @Override
         public void run() {
+            mHandler.sendEmptyMessage(-1);
             boolean loadstate = false;// 查询结果 的 成功和失败
             String messageStr = "";
             // 命名空间
@@ -147,13 +181,18 @@ public class SmkwcxActivity extends AppCompatActivity {
                     // 获取返回的结果
                     String result1 = object1.toString();
                     Log.i("kwcq", result1);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("data",result1);
-                        Message msg = mHandler.obtainMessage();
-                        msg.setData(bundle);
-                        msg.what = 1;
-                        msg.sendToTarget();
-//                    }
+                    Bundle bundle = new Bundle();
+                    bundle.putString("data", result1);
+                    Message msg = mHandler.obtainMessage();
+                    msg.setData(bundle);
+                    msg.what = 1;
+                    msg.sendToTarget();
+                }else {
+                    // 请求失败
+                    Message msg = mHandler.obtainMessage();
+                    msg.what = 0;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("msg", "获取失败");
                 }
             }
         }
@@ -162,5 +201,19 @@ public class SmkwcxActivity extends AppCompatActivity {
     @OnClick(R.id.finish)
     public void onViewClicked() {
         finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == 241) {
+//            code.setText("");
+            code.requestFocus();
+            return false;
+        } else if ( keyCode == KeyEvent.KEYCODE_ENTER) {
+            new Thread(new Querykwcx(code.getText().toString().trim())).start();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }
