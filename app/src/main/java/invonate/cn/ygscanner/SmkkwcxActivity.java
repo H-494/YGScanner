@@ -48,8 +48,8 @@ public class SmkkwcxActivity extends AppCompatActivity {
     @BindView(R.id.list)
     ListView list;
 
-    private String kubie;
-    private String ku;
+    private String kubie = "";
+    private String ku = "";
 
     ArrayList<Ku.DataBean.KubieBean> data;
 
@@ -69,6 +69,12 @@ public class SmkkwcxActivity extends AppCompatActivity {
                     final String listdata = msg.getData().getString("data");
                     final Kkwcx kkwcx = JSON.parseObject(listdata, Kkwcx.class);
                     KkwxxAdapter adapter = new KkwxxAdapter(SmkkwcxActivity.this, kkwcx.getData());
+                    if(kkwcx.getResult().equals("F")){
+                        Toast.makeText(SmkkwcxActivity.this, "查询失败", Toast.LENGTH_SHORT).show();
+                        if (dialog.isShowing())
+                            dialog.dismiss();
+                        return;
+                    }
                     adapter.setOnButtonClickListener(new KkwxxAdapter.OnButtonClickListener() {
                         @Override
                         public void onCLick(View view, int position) {
@@ -89,7 +95,8 @@ public class SmkkwcxActivity extends AppCompatActivity {
                     if (dialog.isShowing())
                         dialog.dismiss();
                     break;
-
+                case -1:
+                    dialog.show();
             }
         }
     };
@@ -143,11 +150,7 @@ public class SmkkwcxActivity extends AppCompatActivity {
                 if (kubie.equals("") || kubie == null ){
                     Toast.makeText(this, "请选择库别", Toast.LENGTH_SHORT).show();
                     break;
-                }else if(ku.equals("")||ku==null){
-                    Toast.makeText(this, "请选择库区", Toast.LENGTH_SHORT).show();
-                    break;
                 }else{
-                    dialog.show();
                     new Thread(new Querykkw(kubie, ku)).start();
                     break;
                 }
@@ -169,6 +172,7 @@ public class SmkkwcxActivity extends AppCompatActivity {
 
         @Override
         public void run() {
+            mHandler.sendEmptyMessage(-1);
             boolean loadstate = false;// 查询结果 的 成功和失败
             String messageStr = "";
             // 命名空间
@@ -224,7 +228,6 @@ public class SmkkwcxActivity extends AppCompatActivity {
                     msg.setData(bundle);
                     msg.what = 1;
                     msg.sendToTarget();
-
                 }
             }
         }
