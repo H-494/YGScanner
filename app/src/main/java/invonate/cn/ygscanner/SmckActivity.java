@@ -266,7 +266,7 @@ public class SmckActivity extends AppCompatActivity {
 
     private TextWatcher watcher = new TextWatcher() {
         int location = 0;
-        boolean isExcute = false;
+        boolean isExcute = false;//是否为扫描
 
         @SuppressLint("NewApi")
         @Override

@@ -86,21 +86,24 @@ public class SmkwcxActivity extends AppCompatActivity {
 
     private TextWatcher watcher = new TextWatcher() {
         int location = 0;
-        boolean isExcute = false;
+        boolean isExcute = false;       //是否为扫描
+        CharSequence temp;
 
-//        @SuppressLint("NewApi")
+        //        @SuppressLint("NewApi")
         @Override
         public void afterTextChanged(Editable arg0) {
 
             if (arg0.length() > 0) {
                 if (!isExcute) {
+                    if (code.getText().length() > 14) {
+                        new Thread(new Querykwcx(code.getText().toString().trim())).start();
+                    }
                     return;
                 }
                 if (location > 0) {
                     arg0.delete(0, location);
-                    Log.i("hhh","22222222222");
                 }
-                if (code.getText().length() > 25) new Thread(new Querykwcx(code.getText().toString().trim())).start();
+
             }
 
         }
@@ -187,7 +190,7 @@ public class SmkwcxActivity extends AppCompatActivity {
                     msg.setData(bundle);
                     msg.what = 1;
                     msg.sendToTarget();
-                }else {
+                } else {
                     // 请求失败
                     Message msg = mHandler.obtainMessage();
                     msg.what = 0;
@@ -209,7 +212,7 @@ public class SmkwcxActivity extends AppCompatActivity {
 //            code.setText("");
             code.requestFocus();
             return false;
-        } else if ( keyCode == KeyEvent.KEYCODE_ENTER) {
+        } else if (keyCode == KeyEvent.KEYCODE_ENTER) {
             new Thread(new Querykwcx(code.getText().toString().trim())).start();
             return false;
         } else {

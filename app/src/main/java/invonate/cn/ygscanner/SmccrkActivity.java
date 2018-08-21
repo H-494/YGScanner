@@ -153,21 +153,6 @@ public class SmccrkActivity extends AppCompatActivity {
         dialog.setMessage("加载中");
         list_pai = JSON.parseArray(getJson("pai.json", this), String.class);
 
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list_pai);
-        spPai.setAdapter(adapter3);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spPai.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                pai = list_pai.get(position).trim();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
         ArrayAdapter<Ku.DataBean.KubieBean> adapter0 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
         spKubie.setAdapter(adapter0);
         adapter0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -191,6 +176,37 @@ public class SmccrkActivity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                 qu = list_qv.get(i).getValue();
+                                if(kubie.equals("B40")){
+                                    list_pai.add("A");
+                                    list_pai.add("B");
+                                    list_pai.add("C");
+                                    list_pai.add("AB");
+                                    list_pai.add("BC");
+                                    list_pai.add("ABC");
+                                }else {
+                                    if(list_pai.size()>32){
+                                        list_pai.remove("A");
+                                        list_pai.remove("B");
+                                        list_pai.remove("C");
+                                        list_pai.remove("AB");
+                                        list_pai.remove("BC");
+                                        list_pai.remove("ABC");
+                                    }
+                                }
+                                ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(SmccrkActivity.this, android.R.layout.simple_spinner_item, list_pai);
+                                spPai.setAdapter(adapter3);
+                                adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spPai.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                                        pai = list_pai.get(position).trim();
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                    }
+                                });
                             }
 
                             @Override
@@ -303,7 +319,7 @@ public class SmccrkActivity extends AppCompatActivity {
 
     private TextWatcher watcher = new TextWatcher() {
         int location = 0;
-        boolean isExcute = false;
+        boolean isExcute = false; //是否为扫描
 
         @Override
         public void afterTextChanged(Editable arg0) {
