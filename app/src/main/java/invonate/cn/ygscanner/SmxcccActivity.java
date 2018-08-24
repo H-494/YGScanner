@@ -181,21 +181,9 @@ public class SmxcccActivity extends AppCompatActivity {
                                 Log.i("spqv", i + "");
                                 qu = list_qv.get(i).getValue();
                                 if(kubie.equals("B40")){
-                                    list_pai.add("A");
-                                    list_pai.add("B");
-                                    list_pai.add("C");
-                                    list_pai.add("AB");
-                                    list_pai.add("BC");
-                                    list_pai.add("ABC");
+                                    list_pai = JSON.parseArray(getJson("pai2.json", SmxcccActivity.this), String.class);
                                 }else {
-                                    if(list_pai.size()>32){
-                                        list_pai.remove("A");
-                                        list_pai.remove("B");
-                                        list_pai.remove("C");
-                                        list_pai.remove("AB");
-                                        list_pai.remove("BC");
-                                        list_pai.remove("ABC");
-                                    }
+                                    list_pai = JSON.parseArray(getJson("pai.json", SmxcccActivity.this), String.class);
                                 }
                                 ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(SmxcccActivity.this, android.R.layout.simple_spinner_item, list_pai);
                                 spPai.setAdapter(adapter3);
@@ -275,7 +263,6 @@ public class SmxcccActivity extends AppCompatActivity {
         if (bundle != null) {
             List<String> list = bundle.getStringArrayList("list");
             if (list != null) {
-                Log.i("num", list.size() + "");
                 String list_ku = list.get(0);
                 String list_qv = list.get(1);
                 List<Ku.DataBean.KubieBean.KuBean> ku = null;
@@ -317,8 +304,6 @@ public class SmxcccActivity extends AppCompatActivity {
                     }
                 } else {
                     String list_kubie = list.get(2);
-                    Log.i("ku", list_ku);
-                    Log.i("qv", list_qv);
                     for (int i = 0; i < data.size(); i++) {
                         if (list_kubie.equals(data.get(i).getName())) {
                             ku = data.get(i).getKu();
@@ -329,8 +314,6 @@ public class SmxcccActivity extends AppCompatActivity {
                     if (ku != null) {
                         for (int n = 0; n < ku.size(); n++) {
                             if (list_ku.equals(ku.get(n).getName())) {
-                                Log.i("getku", ku.get(n).getName());
-                                Log.i("getku", n + "");
                                 qv = ku.get(n).getQv();
                                 old_ku = n;
                                 spKu.setSelection(n);
@@ -340,8 +323,6 @@ public class SmxcccActivity extends AppCompatActivity {
                         if (qv != null) {
                             for (int m = 0; m < qv.size(); m++) {
                                 if (list_qv.equals(qv.get(m).getValue())) {
-                                    Log.i("getqv", qv.get(m).getValue());
-                                    Log.i("getku", m + "");
                                     old_qu = m;
                                     spQu.setSelection(m);
                                     break;
@@ -416,7 +397,7 @@ public class SmxcccActivity extends AppCompatActivity {
                         Toast.makeText(this, "请选择库区", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (qu == null || "".equals(qu)) {
+                    if ((!ku.equals("X50I") && !ku.equals("X30F"))&&(qu == null || "".equals(qu))) {
                         Toast.makeText(this, "请选择区", Toast.LENGTH_SHORT).show();
                         return;
                     }

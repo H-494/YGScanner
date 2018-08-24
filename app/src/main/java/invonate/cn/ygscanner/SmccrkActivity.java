@@ -177,21 +177,9 @@ public class SmccrkActivity extends AppCompatActivity {
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                 qu = list_qv.get(i).getValue();
                                 if(kubie.equals("B40")){
-                                    list_pai.add("A");
-                                    list_pai.add("B");
-                                    list_pai.add("C");
-                                    list_pai.add("AB");
-                                    list_pai.add("BC");
-                                    list_pai.add("ABC");
+                                    list_pai = JSON.parseArray(getJson("pai2.json", SmccrkActivity.this), String.class);
                                 }else {
-                                    if(list_pai.size()>32){
-                                        list_pai.remove("A");
-                                        list_pai.remove("B");
-                                        list_pai.remove("C");
-                                        list_pai.remove("AB");
-                                        list_pai.remove("BC");
-                                        list_pai.remove("ABC");
-                                    }
+                                    list_pai = JSON.parseArray(getJson("pai.json", SmccrkActivity.this), String.class);
                                 }
                                 ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(SmccrkActivity.this, android.R.layout.simple_spinner_item, list_pai);
                                 spPai.setAdapter(adapter3);
@@ -375,7 +363,7 @@ public class SmccrkActivity extends AppCompatActivity {
                         Toast.makeText(this, "请选择库区", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (qu == null || "".equals(qu)) {
+                    if ((!ku.equals("X50I") && !ku.equals("X30F"))&&(qu == null || "".equals(qu))) {
                         Toast.makeText(this, "请选择区", Toast.LENGTH_SHORT).show();
                         return;
                     }

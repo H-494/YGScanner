@@ -112,21 +112,6 @@ public class KccxActivity extends AppCompatActivity {
         data = (ArrayList<Ku.DataBean.KubieBean>) getIntent().getExtras().getSerializable("data");
         list_pai = JSON.parseArray(getJson("pai.json", this), String.class);
 
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list_pai);
-        spPai.setAdapter(adapter3);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spPai.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                pai = list_pai.get(position).trim();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
         ArrayAdapter<Ku.DataBean.KubieBean> adapter0 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
         spKubie.setAdapter(adapter0);
         adapter0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -150,6 +135,25 @@ public class KccxActivity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                 qu = list_qv.get(i).getValue();
+                                if(kubie.equals("B40")){
+                                    list_pai = JSON.parseArray(getJson("pai2.json", KccxActivity.this), String.class);
+                                }else {
+                                    list_pai = JSON.parseArray(getJson("pai.json", KccxActivity.this), String.class);
+                                }
+                                ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(KccxActivity.this, android.R.layout.simple_spinner_item, list_pai);
+                                spPai.setAdapter(adapter3);
+                                adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spPai.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                                        pai = list_pai.get(position).trim();
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                    }
+                                });
                             }
 
                             @Override
@@ -157,6 +161,7 @@ public class KccxActivity extends AppCompatActivity {
 
                             }
                         });
+
                     }
 
                     @Override
@@ -187,7 +192,7 @@ public class KccxActivity extends AppCompatActivity {
                     Toast.makeText(this, "请选择库区", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (qu == null || "".equals(qu)) {
+                if ((!ku.equals("X50I") && !ku.equals("X30F"))&&(qu == null || "".equals(qu))) {
                     Toast.makeText(this, "请选择区", Toast.LENGTH_SHORT).show();
                     return;
                 }
