@@ -147,6 +147,17 @@ public class SmccrkActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setTitle("扫描产出入库");
         data = (ArrayList<Ku.DataBean.KubieBean>) getIntent().getExtras().getSerializable("data");
+
+        List<Ku.DataBean.KubieBean> remove=new ArrayList<>();
+        for (int i=0;i<data.size();i++){
+            if(data.get(i).getName().equals("H01")||data.get(i).getName().equals("H02")){
+                remove.add(data.get(i));
+            }
+        }
+        for (Ku.DataBean.KubieBean i:remove){
+            data.remove(i);
+        }
+
         DatabaseHelper database = new DatabaseHelper(this);
         db = database.getReadableDatabase();
         dialog = new ProgressDialog(this);
@@ -363,7 +374,7 @@ public class SmccrkActivity extends AppCompatActivity {
                         Toast.makeText(this, "请选择库区", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if ((!ku.equals("X50I") && !ku.equals("X30F"))&&(qu == null || "".equals(qu))) {
+                    if (qu == null || "".equals(qu)) {
                         Toast.makeText(this, "请选择区", Toast.LENGTH_SHORT).show();
                         return;
                     }

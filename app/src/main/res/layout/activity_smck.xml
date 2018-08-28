@@ -55,45 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="0">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="5dp"
-                android:text="库"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/sp_outku"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/back_spinner">
-
-            </android.support.v7.widget.AppCompatSpinner>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,20 +90,16 @@
             </android.support.v7.widget.AppCompatSpinner>
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="0">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="5dp"
-                android:text="库"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -147,16 +107,8 @@
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/sp_inku"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/back_spinner">
-
-            </android.support.v7.widget.AppCompatSpinner>
-
         </LinearLayout>
+
         <Button
             android:id="@+id/sure"
             android:layout_width="match_parent"

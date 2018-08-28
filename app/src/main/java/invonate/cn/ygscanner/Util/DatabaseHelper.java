@@ -68,9 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " REALWTG numeric(8, 3) DEFAULT ( 0 ),"
                 + " RESULT VARCHAR(500),"
                 + " OKUBIE VARCHAR(10),"
-                + " IKUBIE VARCHAR(10),"
-                + " OKU VARCHAR(10),"
-                + " IKU VARCHAR(10))";
+                + " IKUBIE VARCHAR(10))";
 
         db.execSQL(sql_ck);
 

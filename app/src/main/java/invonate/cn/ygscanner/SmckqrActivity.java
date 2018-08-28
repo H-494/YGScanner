@@ -113,6 +113,9 @@ public class SmckqrActivity extends AppCompatActivity {
             bz = "C";
             bc = "3";
         }
+        List<String> list = getSmck();
+        Log.i("出库确认",list.get(0));
+        Log.i("出库确认",list.get(1));
     }
 
     @OnClick({R.id.confirm, R.id.delete_all, R.id.forward, R.id.finish})
@@ -355,13 +358,11 @@ public class SmckqrActivity extends AppCompatActivity {
         ArrayList<String> list = new ArrayList<>();
         DatabaseHelper helper = new DatabaseHelper(this);
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT IKU,OKU,IKUBIE,OKUBIE FROM YG_CKXXM", null);
+        Cursor cursor = db.rawQuery("SELECT IKUBIE,OKUBIE FROM YG_CKXXM", null);
         if (cursor.getCount() != 0) {
             cursor.moveToNext();
             list.add(cursor.getString(0));
             list.add(cursor.getString(1));
-            list.add(cursor.getString(2));
-            list.add(cursor.getString(3));
         }
         return list;
     }

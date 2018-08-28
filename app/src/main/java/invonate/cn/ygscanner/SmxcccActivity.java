@@ -397,7 +397,7 @@ public class SmxcccActivity extends AppCompatActivity {
                         Toast.makeText(this, "请选择库区", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if ((!ku.equals("X50I") && !ku.equals("X30F"))&&(qu == null || "".equals(qu))) {
+                    if (qu == null || "".equals(qu)) {
                         Toast.makeText(this, "请选择区", Toast.LENGTH_SHORT).show();
                         return;
                     }

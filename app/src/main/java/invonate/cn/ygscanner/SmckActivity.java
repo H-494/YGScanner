@@ -55,10 +55,6 @@ public class SmckActivity extends AppCompatActivity {
     AppCompatSpinner spOutkubie;
     @BindView(R.id.sp_inkubie)
     AppCompatSpinner spInkubie;
-    @BindView(R.id.sp_outku)
-    AppCompatSpinner spOutku;
-    @BindView(R.id.sp_inku)
-    AppCompatSpinner spInku;
     @BindView(R.id.code)
     EditText code;
     @BindView(R.id.type)
@@ -87,9 +83,7 @@ public class SmckActivity extends AppCompatActivity {
     SQLiteDatabase db;
 
     String okubie;
-    String oku;
     String ikubie;
-    String iku;
 
     int old_iku = 0;
     int old_oku = 0;
@@ -118,24 +112,6 @@ public class SmckActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 okubie = data.get(i).getName();
-                final List<Ku.DataBean.KubieBean.KuBean> list_ku = data.get(i).getKu();
-                ArrayAdapter<Ku.DataBean.KubieBean.KuBean> adapter1 = new ArrayAdapter<>(SmckActivity.this, android.R.layout.simple_spinner_item, list_ku);
-                spOutku.setAdapter(adapter1);
-                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spOutku.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        oku = list_ku.get(i).getName();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-                if (old_oku != 0) {
-                    spOutku.setSelection(old_oku);
-                }
             }
 
             @Override
@@ -148,25 +124,6 @@ public class SmckActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 ikubie = data.get(i).getName();
-                final List<Ku.DataBean.KubieBean.KuBean> list_ku = data.get(i).getKu();
-                ArrayAdapter<Ku.DataBean.KubieBean.KuBean> adapter1 = new ArrayAdapter<>(SmckActivity.this, android.R.layout.simple_spinner_item, list_ku);
-                spInku.setAdapter(adapter1);
-                adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spInku.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        iku = list_ku.get(i).getName();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-                if (old_iku != 0) {
-                    spInku.setSelection(old_iku);
-
-                }
             }
 
             @Override
@@ -217,17 +174,12 @@ public class SmckActivity extends AppCompatActivity {
 //            sure = true;
             List<String> list = bundle.getStringArrayList("list");
             if (list != null) {
-                String list_iku = list.get(0);
-                String list_oku = list.get(1);
-                String list_ikubie = list.get(2);
-                String list_okubie = list.get(3);
+                String list_ikubie = list.get(0);
+                String list_okubie = list.get(1);
 
-                List<Ku.DataBean.KubieBean.KuBean> iku = null;
-                List<Ku.DataBean.KubieBean.KuBean> oku = null;
                 for (int i = 0; i < data.size(); i++) {
                     if (list_ikubie.equals(data.get(i).getName())) {
                         spInkubie.setSelection(i);
-                        iku = data.get(i).getKu();
                         break;
                     }
 
@@ -235,28 +187,7 @@ public class SmckActivity extends AppCompatActivity {
                 for (int i = 0; i < data.size(); i++) {
                     if (list_okubie.equals(data.get(i).getName())) {
                         spOutkubie.setSelection(i);
-                        oku = data.get(i).getKu();
                         break;
-                    }
-                }
-                if (iku != null) {
-                    for (int n = 0; n < iku.size(); n++) {
-                        if (list_iku.equals(iku.get(n).getName())) {
-                            old_iku = n;
-                            Log.i("hhh",list_iku);
-                            Log.i("hhh",n+"");
-                            spInku.setSelection(n);
-                            break;
-                        }
-                    }
-                }
-                if (oku != null) {
-                    for (int m = 0; m < oku.size(); m++) {
-                        if (list_oku.equals(oku.get(m).getName())) {
-                            old_oku = m;
-                            spOutku.setSelection(m);
-                            break;
-                        }
                     }
                 }
             }
@@ -324,18 +255,8 @@ public class SmckActivity extends AppCompatActivity {
                         Toast.makeText(this, "请选择移入库别", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (oku == null || "".equals(oku)) {
-                        Toast.makeText(this, "请选择移出库", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (iku == null || "".equals(iku)) {
-                        Toast.makeText(this, "请选择移入库", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                     spInkubie.setEnabled(false);
                     spOutkubie.setEnabled(false);
-                    spInku.setEnabled(false);
-                    spOutku.setEnabled(false);
                     sure = true;
                 }
                 break;
@@ -520,10 +441,10 @@ public class SmckActivity extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("goods", goods);
 
-                        String insert = "insert into YG_CKXXM(INVID,SCHDNO,ORDERLENGTH,ORDERTHICK,THEOWGT,REALWTG,PRODSPECNO,iKUBIE,IKU,OKUBIE,OKU) "
+                        String insert = "insert into YG_CKXXM(INVID,SCHDNO,ORDERLENGTH,ORDERTHICK,THEOWGT,REALWTG,PRODSPECNO,iKUBIE,OKUBIE) "
                                 + " values ('" + invId + "'" + ",'" + schdNo + "','"
                                 + orderLength + "','" + orderThick + "','" + theoWgt + "' ,'"
-                                + realWtg + "','" + prodSpecNo + "','" + ikubie + "','" + iku + "','" + okubie + "','" + oku + "')";
+                                + realWtg + "','" + prodSpecNo + "','" + ikubie + "','" + okubie + "')";
                         try {
                             db.execSQL(insert);
                         } catch (Exception w) {
